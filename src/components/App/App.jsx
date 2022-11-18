@@ -11,25 +11,18 @@ import { ContactList } from '../ContactList/ContactList';
 import { Container, TitlePhonebook, TitleContacts } from './App.styled';
 
 export const App = () => {
+  console.log(5);
   const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contact')) ?? '';
+    return JSON.parse(localStorage.getItem('contacts')) ?? [];
   });
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const handleContactFormSubmit = ({ name, number }) => {
+    console.log(1);
     if (
       contacts.some(contact => {
         return contact.name.toLowerCase() === name.toLowerCase();
@@ -41,6 +34,7 @@ export const App = () => {
 
     const nextContacts = { id: nanoid(), name: name, number: number };
     setContacts([...contacts, nextContacts]);
+    console.log(2);
   };
 
   const handleFilterChange = event => {
